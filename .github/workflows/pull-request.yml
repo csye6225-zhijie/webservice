@@ -23,4 +23,5 @@ jobs:
         java-version: '1.8'
 
     - name: Build with Maven(Unit Test)
-      run : mvn --batch-mode --update-snapshots verify
+      run : echo run unit-test
+      #mvn clean install
