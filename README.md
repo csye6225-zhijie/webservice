@@ -17,4 +17,4 @@ and create database named 'csye6225'
     if `main class not found`  try Reload step again
 
 
-- maven.plugin  -install -clear
+
