@@ -12,12 +12,13 @@ if connect the database:
 - Start MySQL or mysql.server by `mysqladmin -u root -p` and enter root password
 and create database named 'csye6225'
 - Configure Mysql connection in application.properties
-  (if error with `EntityFactory`, check the mysql connection in local)
+  (if error with `EntityManagerFactory`, check the mysql connection in local)
 
 - Reload the `pom.xml` to load all dependencies and take care the JRE version
 - right click DemoDaoApplication in src/main/java and click run 'DemoDaoApplication'
     if `main class not found`  try Reload step again
+    or `mvn spring-boot:run -Dspring-boot.run.folders=./src/main/java/com/example/demodao/DemoDaoApplication.java`
 
 
-- maven.plugin  -install -clear
+- maven.plugin  `mvn clean install`
 - First add test annotation and class and run the unit test by `mvn test` 
