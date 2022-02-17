@@ -1,8 +1,8 @@
 package com.csye6225.webservice.Controller;
 
-import com.csye6225.webservice.Entity.User;
+import com.csye6225.webservice.Model.User;
 import com.csye6225.webservice.Service.UserService;
-import com.csye6225.webservice.Util.UserResponseTransfer;
+import com.csye6225.webservice.Model.VO.UserVO;
 import org.aspectj.bridge.MessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -11,9 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -74,7 +72,7 @@ public class UserController {
         user.setAccountUpdated(currentTime);
 
         userService.save(user);
-        return new ResponseEntity(new UserResponseTransfer(user.getId(),user.getFirst_name(),user.getLast_name(),user.getUsername(),user.getAccountCreated(),user.getAccountUpdated()),
+        return new ResponseEntity(new UserVO(user.getId(),user.getFirst_name(),user.getLast_name(),user.getUsername(),user.getAccountCreated(),user.getAccountUpdated()),
                 HttpStatus.CREATED);
     }
 
@@ -97,7 +95,7 @@ public class UserController {
             if(!BCrypt.checkpw(values[1], rightPassword))
                 return new ResponseEntity(HttpStatus.BAD_REQUEST);
 
-            return new ResponseEntity(new UserResponseTransfer(user.getId(),user.getFirst_name(),user.getLast_name(),user.getUsername(),user.getAccountCreated(),user.getAccountUpdated())
+            return new ResponseEntity(new UserVO(user.getId(),user.getFirst_name(),user.getLast_name(),user.getUsername(),user.getAccountCreated(),user.getAccountUpdated())
             , HttpStatus.OK);
         }else {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
@@ -143,7 +141,6 @@ public class UserController {
             if(updateUser.getLast_name() != null && updateUser.getLast_name()!=""){
                 user.setLast_name(updateUser.getLast_name());
             }
-            //bcrypt
             bCryptPasswordEncoder = new BCryptPasswordEncoder();
             if(updateUser.getPassword() != null && updateUser.getPassword()!=""){
                 user.setPassword(bCryptPasswordEncoder.encode(updateUser.getPassword()));

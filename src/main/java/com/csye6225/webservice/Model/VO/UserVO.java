@@ -1,14 +1,14 @@
-package com.csye6225.webservice.Util;
+package com.csye6225.webservice.Model.VO;
 
-public class UserResponseTransfer {
-    private String id;
+public class UserVO {
+    private final String id;
     private String first_name;
     private String last_name;
-    private String username;
-    private String account_created;
-    private String account_updated;
+    private final String username;
+    private final String account_created;
+    private final String account_updated;
 
-    public UserResponseTransfer(String id, String first_name, String last_name, String username, String account_created, String account_updated) {
+    public UserVO(String id, String first_name, String last_name, String username, String account_created, String account_updated) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -19,10 +19,6 @@ public class UserResponseTransfer {
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getFirst_name() {
@@ -45,23 +41,11 @@ public class UserResponseTransfer {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getAccount_created() {
         return account_created;
     }
 
-    public void setAccount_created(String account_created) {
-        this.account_created = account_created;
-    }
-
     public String getAccount_updated() {
         return account_updated;
-    }
-
-    public void setAccount_updated(String account_updated) {
-        this.account_updated = account_updated;
     }
 }
