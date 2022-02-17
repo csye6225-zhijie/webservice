@@ -1,4 +1,4 @@
-package com.example.demodao.DAO;
+package com.csye6225.webservice.DAO;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

@@ -1,4 +1,4 @@
-package com.example.demodao.Entity;
+package com.csye6225.webservice.Entity;
 
 import org.hibernate.annotations.GenericGenerator;
 

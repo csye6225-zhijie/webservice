@@ -1,6 +1,6 @@
-package com.example.demodao.Config;
+package com.csye6225.webservice.Config;
 
-import com.example.demodao.Service.UserAuthenService;
+import com.csye6225.webservice.Service.UserAuthenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

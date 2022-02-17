@@ -1,6 +1,6 @@
-package com.example.demodao.DAO;
+package com.csye6225.webservice.DAO;
 
-import com.example.demodao.Entity.User;
+import com.csye6225.webservice.Entity.User;
 import org.springframework.stereotype.Repository;
 
 @Repository

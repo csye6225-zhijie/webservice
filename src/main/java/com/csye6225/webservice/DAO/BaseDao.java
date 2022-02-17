@@ -1,4 +1,4 @@
-package com.example.demodao.DAO;
+package com.csye6225.webservice.DAO;
 
 public interface BaseDao<T,PK extends java.io.Serializable> {
     /**

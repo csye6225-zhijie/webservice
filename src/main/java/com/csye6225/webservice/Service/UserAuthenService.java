@@ -1,6 +1,6 @@
-package com.example.demodao.Service;
+package com.csye6225.webservice.Service;
 
-import com.example.demodao.Entity.User;
+import com.csye6225.webservice.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

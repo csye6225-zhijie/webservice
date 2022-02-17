@@ -1,15 +1,14 @@
-package com.example.demodao.Controller;
+package com.csye6225.webservice.Controller;
 
-import com.example.demodao.Entity.User;
-import com.example.demodao.Service.UserService;
-import com.example.demodao.Util.UserResponseTransfer;
+import com.csye6225.webservice.Entity.User;
+import com.csye6225.webservice.Service.UserService;
+import com.csye6225.webservice.Util.UserResponseTransfer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.aspectj.bridge.MessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -55,9 +54,9 @@ public class UserController {
     @PostMapping(value = "/v1/user", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public UserResponseTransfer newUser(@RequestBody User newUser){
-        if (!isValidEmail(newUser.getUsername()))  {
-           throw new MethodArgumentNotValidException(Bad);
-        }
+//        if (!isValidEmail(newUser.getUsername()))  {
+//           throw new MethodArgumentNotValidException();
+//        }
 
         //TODO :  email uniqueness verify
         User repeatedUserEmail = userService.findByUserName(newUser.getUsername());
@@ -94,7 +93,7 @@ public class UserController {
             // credentials = username:password
             final String[] values = credentials.split(":", 2);
             User user = userService.findByUserName(values[0]);
-            if(null == user)
+            if(null == user) return null;//
 
             return new UserResponseTransfer(user.getId(),user.getFirst_name(),user.getLast_name(),user.getUsername(),user.getAccountCreated(),user.getAccountUpdated());
 

@@ -1,4 +1,4 @@
-package com.example.demodao.Util;
+package com.csye6225.webservice.Util;
 
 public class UserResponseTransfer {
     private String id;
