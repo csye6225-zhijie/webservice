@@ -27,7 +27,7 @@ public class UserController {
     private UserService userService;
     private Date date;
     public static final String EMAIL_REGEX_DEFAULT = "^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
-    private MessageUtil exceptionLog;
+
 
     public static boolean isValidEmail(String email) {
         return email.matches(EMAIL_REGEX_DEFAULT);
