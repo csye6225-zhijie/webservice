@@ -1,4 +1,4 @@
-package com.csye6225.webservice.Entity;
+package com.csye6225.webservice.Model;
 
 import org.hibernate.annotations.GenericGenerator;
 

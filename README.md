@@ -15,9 +15,9 @@ and create database named 'csye6225'
   (if error with `EntityManagerFactory`, check the mysql connection in local)
 
 - Reload the `pom.xml` to load all dependencies and take care the JRE version
-- right click DemoDaoApplication in src/main/java and click run 'DemoDaoApplication'
+- right click WebserviceApplication in src/main/java and click run 'WebserviceApplication'
     if `main class not found`  try Reload step again
-    or `mvn spring-boot:run -Dspring-boot.run.folders=./src/main/java/com/example/demodao/DemoDaoApplication.java`
+    or `mvn spring-boot:run -Dspring-boot.run.folders=[path: from src folder to main class]`
 
 
 - maven.plugin  `mvn clean install`

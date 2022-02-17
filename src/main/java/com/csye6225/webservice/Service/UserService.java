@@ -1,7 +1,7 @@
 package com.csye6225.webservice.Service;
 
 import com.csye6225.webservice.DAO.UserDaoImpl;
-import com.csye6225.webservice.Entity.User;
+import com.csye6225.webservice.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
