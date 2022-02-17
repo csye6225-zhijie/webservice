@@ -1,13 +1,13 @@
-package com.example.demodao;
+package com.csye6225.webservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoDaoApplication {
+public class WebserviceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DemoDaoApplication.class, args);
+        SpringApplication.run(WebserviceApplication.class, args);
     }
 
 }

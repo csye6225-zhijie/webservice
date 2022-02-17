@@ -8,11 +8,11 @@
         <version>2.5.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
-    <artifactId>demoDAO</artifactId>
+    <groupId>com.csye6225</groupId>
+    <artifactId>webservice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>webservice</name>
-    <description>webservice</description>
+    <description>csye6225-webservice</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
