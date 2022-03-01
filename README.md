@@ -19,6 +19,16 @@ and create database named 'csye6225'
     if `main class not found`  try Reload step again
     or `mvn spring-boot:run -Dspring-boot.run.folders=[path: from src folder to main class]`
 
-
 - maven.plugin  `mvn clean install`
 - First add test annotation and class and run the unit test by `mvn test` 
+
+
+## Build AMI with HashiCorp Packer
+- Packer init `packer init .`
+- Validate Packer Template `packer validate .`(HCL) `./packer validate ami.json` (json)
+- Build AMI   `packer build ami.pkr.hcl` (HCL)
+    `./packer build \`
+    `-var 'aws_access_key=REDACTED' \`
+    `-var 'aws_secret_key=REDACTED' \`
+    `-var 'aws_region=us-east-1' \`
+    `ami.json` 
