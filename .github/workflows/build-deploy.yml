@@ -23,7 +23,7 @@ jobs:
 
     steps:
     - name: Build Maven file
-      run: mvn -f ./pom.xml clean install
+      run: mvn -f ../ clean install
             # mvnw install
 
     - name: Build AMI from Amazon EBS
