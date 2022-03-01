@@ -21,8 +21,8 @@ jobs:
 
     steps:
     - name: Build Maven file
-      run: mvn clean install
-            mvnw install
+      run: mvn -f ../pom.xml clean install
+            # mvnw install
 
     - name: Build AMI from Amazon EBS
       run: packer init .
