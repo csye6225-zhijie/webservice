@@ -1,10 +1,4 @@
 name: Build & Deploy WebService with AMI
-
-env:
-  ARTIFACT_NAME: csye6225-webservice-${{ github.run_number }}.zip
-  CODEDEPLOY_APPLICATION_NAME: csye6225-webservice
-  CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP_NAME: csye6225-webservice-deployment
-  AWS_REGION: us-east-1
   
 # Controls when the workflow will run
 on:
@@ -22,11 +16,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # - uses: actions/checkout@v2
+    
     - name: Build Maven file
-      run: mvn -f ../ clean install
+      run: mvn --file pom.xml clean install -DskipTests
             # mvnw install
 
     - name: Build AMI from Amazon EBS
       run: packer init .
             packer validate .
-            packer build ami.pkr.hcl -var-file="dev-variable.pkrvars.hcl"
+            packer build -var-file="dev.pkrvars.hcl" ami.pkr.hcl 

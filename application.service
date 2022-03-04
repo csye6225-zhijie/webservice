@@ -1,0 +1,8 @@
+[Unit]
+Description=A Spring Boot application
+
+[Service]
+ExecStart=/bin/java -jar /home/ec2-user/csye/webservice/target/webservice-0.0.1-SNAPSHOT.jar SuccessExitStatus=143
+
+[Install] 
+WantedBy=multi-user.target 
