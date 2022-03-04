@@ -16,25 +16,28 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Validate Template
-        uses: hashicorp/packer-github-actions@master
-        with:
-          command: validate
-          arguments: "-var '{{aws_access_key}}=1' -var '{{aws_secret_key}}=2'"
-          target: ami.pkr.hcl
-
         env:
             AWS_ACCESS_KEY : ${{secrets.AWS_ACCESS_KEY}}
             AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
             PACKER_LOG: 1
+
+      - name: Validate Template
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: validate
+          arguments: "-var 'aws_access_key=${{secrets.AWS_ACCESS_KEY}}' -var 'aws_secret_key=${{secrets.AWS_SECRET_KEY}}'"
+          target: ami.pkr.hcl
           
       - name: Build Artifact
         uses: hashicorp/packer-github-actions@master
         with:
           command: build
-          arguments: "-color=false -on-error=abort -var '{{aws_access_key}}=${{secrets.AWS_SECRET_KEY}}' -var '{{aws_secret_key}}=${{secrets.AWS_SECRET_KEY}}'"
+          arguments: "-color=false -on-error=abort -var 'aws_access_key=${{secrets.AWS_ACCESS_KEY}}' -var 'aws_secret_key=${{secrets.AWS_SECRET_KEY}}'"
           target: ami.pkr.hcl
-
+        env:
+            AWS_ACCESS_KEY : ${{secrets.AWS_ACCESS_KEY}}
+            AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
+            PACKER_LOG: 1
         
 
 
@@ -43,4 +46,5 @@ jobs:
       #     mvn --file pom.xml clean install -DskipTests
       #       # mvnw install
 
+      
       
