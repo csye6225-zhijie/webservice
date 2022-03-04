@@ -1,13 +1,10 @@
-name: Build & Deploy WebService with AMI
+name: Build & Deploy AMI with packer
   
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on pull request events but only for the main branch
   pull_request:
     branches: [ main ]
     types: [closed] 
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
@@ -16,13 +13,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # - uses: actions/checkout@v2
-    
-    - name: Build Maven file
-      run: mvn --file pom.xml clean install -DskipTests
-            # mvnw install
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Build AMI from Amazon EBS
-      run: packer init .
-            packer validate .
-            packer build -var-file="dev.pkrvars.hcl" ami.pkr.hcl 
+      - name: Build Artifact
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: build
+          arguments: "-color=false -on-error=abort -var 'aws_access_key=${{secrets.AWS_ACCESS_KEY}}' -var 'aws_secret_key=${{secrets.AWS_SECRET_KEY}}'"
+          target: ami.pkr.hcl
+
+        env:
+          AWS_ACCESS_KEY : ${{secrets.AWS_ACCESS_KEY}}
+          AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
+          PACKER_LOG: 1
+
+
+      # - name: Build Maven file
+      #   run: 
+      #     mvn --file pom.xml clean install -DskipTests
+      #       # mvnw install
+
+      
