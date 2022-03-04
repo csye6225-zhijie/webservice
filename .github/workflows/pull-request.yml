@@ -23,4 +23,7 @@ jobs:
 
     - name: Build with Maven(Unit Test)
       run : echo run unit-test
+            ls
+            pwd
+            cmd
       #mvn clean install
