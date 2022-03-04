@@ -26,4 +26,4 @@ and create database named 'csye6225'
 ## Build AMI with HashiCorp Packer
 - Packer init `packer init .`
 - Validate Packer Template `packer validate .`(HCL) `./packer validate ami.json` (json)
-- Build AMI   `packer build -var-file="dev.pkrvars.hcl" ami.pkr.hcl` (HCL)
+- Build AMI **locally ** `packer build -var-file="dev.pkrvars.hcl" ami.pkr.hcl` (HCL)
