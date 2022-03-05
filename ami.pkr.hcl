@@ -33,7 +33,7 @@ variable "ami_share_account" {
 
 variable "webservice" {
   type = string
-  default = "/home/runner/work/webservice/webservice"
+  default = "../webservice"
 }
 
 locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }

@@ -1,11 +1,13 @@
 name: Build & Deploy AMI with packer
-  
+
+
 on:
   pull_request:
     branches: [ main ]
     types: [closed] 
 
   workflow_dispatch:
+
 
 jobs:
   packer:
@@ -16,16 +18,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-        env:
-            AWS_ACCESS_KEY : ${{secrets.AWS_ACCESS_KEY}}
-            AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
-            PACKER_LOG: 1
-
+       
       - name: Validate Template 
         uses: hashicorp/packer-github-actions@master
         with:
           command: validate
-          arguments: "-var aws_access_key=${{secrets.AWS_ACCESS_KEY}} -var aws_secret_key=${{secrets.AWS_SECRET_KEY}}"
+          arguments: "-syntax-only -var aws_access_key=1 -var aws_secret_key=2"
           target: ami.pkr.hcl
           
       - name: Build Artifact
