@@ -21,7 +21,7 @@ jobs:
             AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
             PACKER_LOG: 1
 
-      - name: Validate Template
+      - name: Validate Template 
         uses: hashicorp/packer-github-actions@master
         with:
           command: validate
