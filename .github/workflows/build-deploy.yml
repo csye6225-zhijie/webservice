@@ -27,7 +27,7 @@ jobs:
           target: ami.pkr.hcl
           
       - name: Build Artifact
-        uses: hashicorp/packer-github-actions@master
+        # uses: hashicorp/packer-github-actions@master
         # with:
         #   command: build
         #   arguments: "-on-error=abort -force -var aws_access_key=${{secrets.AWS_ACCESS_KEY}} -var aws_secret_key=${{secrets.AWS_SECRET_KEY}} -var webservice=../webservice"
