@@ -104,6 +104,18 @@ public class BaseDaoImpl<T,PK extends Serializable> implements BaseDao<T,PK>{
         return entity;
     }
 
+    public T findByUserId(String user_id){
+        T entity = null;
+        String sql = "FROM Image WHERE user_id = " + "\'"+user_id+"\'";
+        try {
+            Query q = this.getEntityManager().createQuery(sql);
+            entity = (T) q.getSingleResult();
+        } catch (Exception e) {
+            getLog().error("find image by User_id fail" + e.getMessage());
+        }
+        return entity;
+    }
+
 
 
 }

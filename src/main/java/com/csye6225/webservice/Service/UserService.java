@@ -33,7 +33,7 @@ public class UserService {
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = sdf.format(date);
         User newUser = new User();
-        //bcrypt
+
         newUser.setUsername(user.getUsername());
         newUser.setFirst_name(user.getFirst_name());
         newUser.setLast_name(user.getLast_name());

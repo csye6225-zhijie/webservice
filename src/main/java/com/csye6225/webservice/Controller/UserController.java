@@ -1,6 +1,10 @@
 package com.csye6225.webservice.Controller;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.csye6225.webservice.Model.Image;
 import com.csye6225.webservice.Model.User;
+import com.csye6225.webservice.Model.VO.ImageVO;
+import com.csye6225.webservice.Service.ImageService;
 import com.csye6225.webservice.Service.UserService;
 import com.csye6225.webservice.Model.VO.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +14,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+
+import java.util.*;
 
 
 @RestController
@@ -19,6 +26,11 @@ import java.util.Map;
 public class UserController {
 
     private UserService userService;
+    private AmazonS3 amazonS3;
+    private ImageService imageService;
+
+
+    private Date date;
 
     @Autowired
     public void setUserService(UserService userService){
@@ -82,6 +94,66 @@ public class UserController {
             }
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+
+    @PostMapping(value = "/v1/self/pic")
+    public ResponseEntity uploadUserProfilePic(HttpServletRequest httpServletRequest, InputStream is) throws Exception {
+        if(null == is) return new ResponseEntity(HttpStatus.BAD_REQUEST);
+
+        final String authorization = httpServletRequest.getHeader("Authorization");
+        UserVO userVO = userService.authorize(authorization);
+        if(null == userVO) return new ResponseEntity(HttpStatus.BAD_REQUEST);
+
+        //check repeat image
+        Image image = imageService.findByUserId(userVO.getId());
+        if(null != image){
+            imageService.deleteFile(image);
+        }
+        ImageVO imageVO = imageService.saveFile(userVO, is);
+        return ResponseEntity
+                .created(URI.create(imageVO.getUrl()))
+                .body(imageVO);
+
+        //
+    }
+
+    @GetMapping(value = "/v1/self/pic")
+    public ResponseEntity getUserProfileInfo(HttpServletRequest httpServletRequest) throws IOException {
+        final String authorization = httpServletRequest.getHeader("Authorization");
+        UserVO userVO = userService.authorize(authorization);
+        if(null == userVO)
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+
+        Image image = imageService.findByUserId(userVO.getId());
+        if (null == image) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        ImageVO imageVO = new ImageVO(image);
+
+        return ResponseEntity
+                .ok()
+                .body(imageVO);
+    }
+
+    @DeleteMapping("/v1/self/pic")
+    public ResponseEntity deleteUserProfilePic(HttpServletRequest httpServletRequest) {
+        final String authorization = httpServletRequest.getHeader("Authorization");
+        UserVO userVO = userService.authorize(authorization);
+        if(null == userVO) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+        Image image = imageService.findByUserId(userVO.getId());
+        if (null == image) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        imageService.deleteFile(image);
+        return ResponseEntity
+                .noContent()
+                .build();
+
     }
 
 

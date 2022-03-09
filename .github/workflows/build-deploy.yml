@@ -27,11 +27,6 @@ jobs:
           target: ami.pkr.hcl
           
       - name: Build Artifact
-        # uses: hashicorp/packer-github-actions@master
-        # with:
-        #   command: build
-        #   arguments: "-on-error=abort -force -var aws_access_key=${{secrets.AWS_ACCESS_KEY}} -var aws_secret_key=${{secrets.AWS_SECRET_KEY}} -var webservice=../webservice"
-        #   target: ami.pkr.hcl
         run: |
           packer init .
           packer build -on-error=abort -force -var aws_access_key=${{secrets.AWS_ACCESS_KEY}} -var aws_secret_key=${{secrets.AWS_SECRET_KEY}} -var webservice=../webservice ami.pkr.hcl
@@ -39,13 +34,6 @@ jobs:
             AWS_ACCESS_KEY : ${{secrets.AWS_ACCESS_KEY}}
             AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
             PACKER_LOG: 1
-        
-
-
-      # - name: Build Maven file
-      #   run: 
-      #     mvn --file pom.xml clean install -DskipTests
-      #       # mvnw install
 
       
       
