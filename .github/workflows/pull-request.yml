@@ -24,7 +24,7 @@ jobs:
     - name: Build with Maven(Unit Test)
       run : |
         echo run unit-test
-        mvn clean install
+        mvn clean install -DskipTests
       # mvn --file pom.xml clean install -DskipTests
 
     - name: Validate Template 
