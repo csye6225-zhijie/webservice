@@ -20,7 +20,7 @@ and create database named 'csye6225'
     or `mvn spring-boot:run -Dspring-boot.run.folders=[path: from src folder to main class]`
 
 - maven.plugin  `mvn clean install`
-- First add test annotation and class and run the unit test by `mvn test` 
+- First add test annotation and class and run the unit test by `mvn test`  
 
 
 ## Build AMI with HashiCorp Packer
