@@ -1,24 +1,25 @@
 package com.csye6225.webservice.Controller;
 
-import com.amazonaws.services.s3.AmazonS3;
 import com.csye6225.webservice.Model.Image;
 import com.csye6225.webservice.Model.User;
 import com.csye6225.webservice.Model.VO.ImageVO;
+import com.csye6225.webservice.Model.VO.UserVO;
 import com.csye6225.webservice.Service.ImageService;
 import com.csye6225.webservice.Service.UserService;
-import com.csye6225.webservice.Model.VO.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -26,11 +27,9 @@ import java.util.*;
 public class UserController {
 
     private UserService userService;
-    private AmazonS3 amazonS3;
+    @Resource
     private ImageService imageService;
 
-
-    private Date date;
 
     @Autowired
     public void setUserService(UserService userService){
@@ -97,7 +96,8 @@ public class UserController {
     }
 
 
-    @PostMapping(value = "/v1/self/pic")
+    @PostMapping(value = "/v1/user/self/pic")
+    @ResponseBody
     public ResponseEntity uploadUserProfilePic(HttpServletRequest httpServletRequest, InputStream is) throws Exception {
         if(null == is) return new ResponseEntity(HttpStatus.BAD_REQUEST);
 
@@ -114,11 +114,10 @@ public class UserController {
         return ResponseEntity
                 .created(URI.create(imageVO.getUrl()))
                 .body(imageVO);
-
-        //
     }
 
-    @GetMapping(value = "/v1/self/pic")
+    @GetMapping(value = "/v1/user/self/pic")
+    @ResponseBody
     public ResponseEntity getUserProfileInfo(HttpServletRequest httpServletRequest) throws IOException {
         final String authorization = httpServletRequest.getHeader("Authorization");
         UserVO userVO = userService.authorize(authorization);
@@ -136,7 +135,8 @@ public class UserController {
                 .body(imageVO);
     }
 
-    @DeleteMapping("/v1/self/pic")
+    @DeleteMapping("/v1/user/self/pic")
+    @ResponseBody
     public ResponseEntity deleteUserProfilePic(HttpServletRequest httpServletRequest) {
         final String authorization = httpServletRequest.getHeader("Authorization");
         UserVO userVO = userService.authorize(authorization);
@@ -153,7 +153,6 @@ public class UserController {
         return ResponseEntity
                 .noContent()
                 .build();
-
     }
 
 

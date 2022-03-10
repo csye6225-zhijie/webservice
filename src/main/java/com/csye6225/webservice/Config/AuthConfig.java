@@ -15,7 +15,7 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
-                .antMatchers("/v1/user/self", "/v1/user", "/healthz").permitAll()
+                .antMatchers("/v1/user/self", "/v1/user", "/v1/user/self/pic", "/healthz").permitAll()
                 .anyRequest().authenticated();
 
         http.csrf().disable();

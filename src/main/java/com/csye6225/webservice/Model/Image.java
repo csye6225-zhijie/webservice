@@ -1,9 +1,12 @@
 package com.csye6225.webservice.Model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="image")
+@GenericGenerator(name = "system-uuid",strategy = "uuid.hex")
 public class Image {
     @Id
     @Column(length = 32)

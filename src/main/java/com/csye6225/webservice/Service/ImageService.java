@@ -7,6 +7,7 @@ import com.csye6225.webservice.Model.VO.ImageVO;
 import com.csye6225.webservice.Model.VO.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
@@ -15,7 +16,7 @@ import java.io.InputStream;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
 
-@org.springframework.stereotype.Service("imageService")
+@Service("imageService")
 @Transactional(readOnly=true)
 public class ImageService {
     private AmazonS3 amazonS3;
@@ -26,11 +27,12 @@ public class ImageService {
     @Autowired
     private ImageDaoImpl imageDao;
 
-    @Transactional
+    @Transactional(readOnly = false)
     public void save(Image image){
         imageDao.save(image);
     }
 
+    @Transactional(readOnly = false)
     public void delete(String id){ imageDao.delete(id);}
 
     public Image findByUserId(String user_id){
@@ -38,11 +40,12 @@ public class ImageService {
        return image;
     }
 
+    @Transactional(readOnly = false)
     public ImageVO saveFile(UserVO userVO, InputStream is) throws Exception {
         Image image = new Image();
         image.setFile_name("user-image.jpeg");
 
-        String url = bucketName + "/" + image.getUser_id() + "/" + image.getFile_name();
+        String url = bucketName + "/" + userVO.getId() + "/" + image.getFile_name();
         image.setUrl(url);
         date = new Date();
         image.setUser_id(userVO.getId());
@@ -57,6 +60,7 @@ public class ImageService {
         return imageVO;
     }
 
+    @Transactional(readOnly = false)
     public void deleteFile(Image image) {
         //Delete image Object from S3
         amazonS3.deleteObject(bucketName, image.getFile_name());

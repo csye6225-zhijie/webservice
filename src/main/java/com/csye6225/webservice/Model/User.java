@@ -66,10 +66,6 @@ public class User {
         return id;
     }
 
-//    public void setId(String id) {
-//        this.id = id;
-//    }
-
     public String getUsername() {
         return username;
     }

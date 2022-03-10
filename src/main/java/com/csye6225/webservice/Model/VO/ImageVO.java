@@ -32,4 +32,16 @@ public class ImageVO {
     public String getUrl() {
         return url;
     }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public String getFile_name() {
+        return file_name;
+    }
+
+    public String getUpload_date() {
+        return upload_date;
+    }
 }

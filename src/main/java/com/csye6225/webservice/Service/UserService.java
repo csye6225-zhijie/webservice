@@ -115,10 +115,4 @@ public class UserService {
         return 1;
     }
 
-
-    @Transactional(readOnly = false)
-    public void delete(String id)
-    {
-        userDao.delete(id);
-    }
 }
