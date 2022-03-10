@@ -103,7 +103,7 @@ public class UserController {
 
         final String authorization = httpServletRequest.getHeader("Authorization");
         UserVO userVO = userService.authorize(authorization);
-        if(null == userVO) return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        if(null == userVO) return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 
         //check repeat image
         Image image = imageService.findByUserId(userVO.getId());
@@ -122,7 +122,7 @@ public class UserController {
         final String authorization = httpServletRequest.getHeader("Authorization");
         UserVO userVO = userService.authorize(authorization);
         if(null == userVO)
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 
         Image image = imageService.findByUserId(userVO.getId());
         if (null == image) {
@@ -141,7 +141,7 @@ public class UserController {
         final String authorization = httpServletRequest.getHeader("Authorization");
         UserVO userVO = userService.authorize(authorization);
         if(null == userVO) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
         Image image = imageService.findByUserId(userVO.getId());
