@@ -2,12 +2,13 @@ package com.csye6225.webservice.DAO;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.List;
 
 @Transactional
 public class BaseDaoImpl<T,PK extends Serializable> implements BaseDao<T,PK>{
@@ -93,15 +94,27 @@ public class BaseDaoImpl<T,PK extends Serializable> implements BaseDao<T,PK>{
     }
 
     public T findByUserName(String userName){
-        T entity = null;
+        List<T> result = null;
         String sql = "FROM User WHERE username = " + "\'"+userName+"\'";
         try{
             Query q = this.getEntityManager().createQuery(sql);
-            entity = (T) q.getSingleResult();
+            result = q.getResultList();
         }catch (Exception e){
-            this.getLog().error("find user by id fail "+e.getMessage());
+            this.getLog().error("find user by username fail "+e.getMessage());
         }
-        return entity;
+        return null == result || result.isEmpty() ? null : result.get(0);
+    }
+
+    public T findByUserId(String user_id){
+        List<T> result = null;
+        String sql = "FROM Image WHERE user_id = " + "\'"+user_id+"\'";
+        try {
+            Query q = this.getEntityManager().createQuery(sql);
+            result =  q.getResultList();
+        } catch (Exception e) {
+            getLog().error("find image by User_id fail " + e.getMessage());
+        }
+        return null == result || result.isEmpty() ? null : result.get(0);
     }
 
 

@@ -31,10 +31,10 @@ variable "ami_share_account" {
     default = "508720203319"
 }
 
-variable "webservice" {
-  type = string
-  default = "../webservice"
-}
+// variable "webservice" {
+//   type = string
+//   default = "../webservice"
+// }
 
 locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
 
@@ -56,53 +56,49 @@ build {
 
 
     provisioner "file" { 
-        source = "${var.webservice}"
+        source = "./target/webservice-0.0.1-SNAPSHOT.jar"
+        destination = "/tmp/"
+}
+
+    provisioner "file" { 
+        source = "./application.service"
+        destination = "/tmp/"
+}
+
+    provisioner "file" { 
+        source = "./src/main/resources/application.properties"
         destination = "/tmp/"
 }
 
     provisioner "shell" {
         inline = [
-              
             "sudo yum update -y", 
-            "sleep 60",
             "sudo yum -y install java-1.8.0-openjdk-devel.x86_64",
+            "sleep 30",
 
             "export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk",
             "export PATH=$JAVA_HOME/bin:$PATH",
             "export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar",
             
-            "wget https://dlcdn.apache.org/maven/maven-3/3.8.4/binaries/apache-maven-3.8.4-bin.tar.gz",
-            "tar xvf apache-maven-3.8.4-bin.tar.gz",
-            "sudo mv apache-maven-3.8.4  /usr/local/apache-maven",
-            "rm apache-maven-3.8.4-bin.tar.gz",
-            "export M2_HOME=/usr/local/apache-maven && export M2=$M2_HOME/bin && export PATH=$M2:$PATH",
-
-            "sudo wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm",
-            "sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022",
-            "sudo rpm -Uvh mysql80-community-release-el7-3.noarch.rpm",
-            "sudo yum install mysql-server -y",
-            "sudo systemctl stop mysqld",
-            "sudo systemctl set-environment MYSQLD_OPTS='--skip-grant-tables'",
-            "sudo systemctl start mysqld",
-            "mysql -u root -Bse \"FLUSH PRIVILEGES;ALTER USER 'root'@'localhost' IDENTIFIED by 'Qa5271335!';CREATE DATABASE csye6225;\"",
-            "sudo systemctl stop mysqld",
-            "sudo systemctl unset-environment MYSQLD_OPTS",
-            "sudo systemctl start mysqld",
-  
+            "sudo yum install mariadb -y",
+           
             "sudo su",
             "mkdir csye/",
             "cd csye/",
-            "mv /tmp/webservice .",
-            "sudo chmod 777 webservice/",
+            "mv /tmp/webservice-0.0.1-SNAPSHOT.jar .",
+            "sudo chmod +x webservice-0.0.1-SNAPSHOT.jar",
+            "sudo mv /tmp/application.service /etc/systemd/system",
 
-            "cd webservice/",
-            "mvn clean install -DskipTests",
-            "sleep 10",
-            "sudo chmod +x target/webservice-0.0.1-SNAPSHOT.jar",
-            "sudo mv application.service /etc/systemd/system",
-            "sudo systemctl enable application.service",
-            "sudo systemctl start application.service"
+            "touch application.properties",
+            "cat >application.properties <<EOF",
+            "cloud.aws.region.static=${var.aws_region}",
+            "cloud.aws.region.auto=false",
+            "cloud.aws.credentials.access-key=${var.aws_access_key}",
+            "cloud.aws.credentials.secret-key=${var.aws_secret_key}",
 
+            "spring.jpa.hibernate.ddl-auto=update",
+            "spring.jpa.show-sql=true",
+            "EOF"
         ]
     }
 

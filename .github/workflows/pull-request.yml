@@ -22,8 +22,13 @@ jobs:
     #     java-version: '1.8'
 
     - name: Build with Maven(Unit Test)
-      run : echo run unit-test
-      #mvn clean install
+      run : |
+        echo run unit-test
+        mvn clean install -DskipTests
 
-    - run : ls
-    - run : pwd
+    - name: Validate Template 
+      uses: hashicorp/packer-github-actions@master
+      with:
+        command: validate
+        arguments: "-syntax-only -var aws_access_key=1 -var aws_secret_key=2"
+        target: ami.pkr.hcl
