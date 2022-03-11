@@ -26,12 +26,15 @@ jobs:
           arguments: "-syntax-only -var aws_access_key=1 -var aws_secret_key=2"
           target: ami.pkr.hcl
 
-      - name: Build Ami with .jar App
+      - name: Build Artifact with Maven
         run: |
           mvn clean install -DskipTests 
+          
+      - name: Build Ami
+        run: |
           ls
           packer init .
-          packer build -on-error=abort -force -var aws_access_key=${{secrets.AWS_ACCESS_KEY}} -var aws_secret_key=${{secrets.AWS_SECRET_KEY}} -var webservice=./0.0.1-SNAPSHOT/webservice-0.0.1-SNAPSHOT.jar ami.pkr.hcl
+          packer build -on-error=abort -force -var aws_access_key=${{secrets.AWS_ACCESS_KEY}} -var aws_secret_key=${{secrets.AWS_SECRET_KEY}} ami.pkr.hcl
         env:
             AWS_ACCESS_KEY : ${{secrets.AWS_ACCESS_KEY}}
             AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
