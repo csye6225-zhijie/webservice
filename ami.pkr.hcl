@@ -31,10 +31,10 @@ variable "ami_share_account" {
     default = "508720203319"
 }
 
-// variable "webservice" {
-//   type = string
-//   default = "../webservice"
-// }
+variable "webservice" {
+  type = string
+  default = "./target/webservice-0.0.1-SNAPSHOT.jar"
+}
 
 locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
 
@@ -56,7 +56,7 @@ build {
 
 
     provisioner "file" { 
-        source = "./target/webservice-0.0.1-SNAPSHOT.jar"
+        source = "${var.webservice}"
         destination = "/tmp/"
 }
 
