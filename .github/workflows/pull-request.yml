@@ -25,7 +25,6 @@ jobs:
       run : |
         echo run unit-test
         mvn clean install -DskipTests
-      # mvn --file pom.xml clean install -DskipTests
 
     - name: Validate Template 
       uses: hashicorp/packer-github-actions@master

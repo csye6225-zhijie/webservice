@@ -21,7 +21,7 @@ import java.util.Date;
 public class ImageService {
     private AmazonS3 amazonS3;
     private Date date;
-    @Value("{bucket_name}")
+    @Value("{amazon.s3.bucket-name}")
     public String bucketName;
 
     @Autowired

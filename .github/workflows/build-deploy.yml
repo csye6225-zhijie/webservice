@@ -4,7 +4,7 @@ name: Build & Deploy AMI with packer
 on:
   pull_request:
     branches: [ main ]
-    types: [closed] 
+    types: [ closed ] 
 
   workflow_dispatch:
 
@@ -29,7 +29,7 @@ jobs:
       - name: Build Artifact
         run: |
           packer init .
-          packer build -on-error=abort -force -var aws_access_key=${{secrets.AWS_ACCESS_KEY}} -var aws_secret_key=${{secrets.AWS_SECRET_KEY}} -var webservice=../webservice ami.pkr.hcl
+          packer build -on-error=abort -force -var aws_access_key=${{secrets.AWS_ACCESS_KEY}} -var aws_secret_key=${{secrets.AWS_SECRET_KEY}} ami.pkr.hcl
         env:
             AWS_ACCESS_KEY : ${{secrets.AWS_ACCESS_KEY}}
             AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
