@@ -37,8 +37,3 @@ jobs:
         run: |
           ls ./0.0.1-SNAPSHOT/
           packer init .
-
-        env:
-            AWS_ACCESS_KEY : ${{secrets.AWS_ACCESS_KEY}}
-            AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
-            PACKER_LOG: 1
