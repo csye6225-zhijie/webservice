@@ -29,7 +29,9 @@ jobs:
       - name: test
         run: |
           ls 
-          ls ./0.0.1-SNAPSHOT/ 
+          pwd
+          ls ../ 
+          ls ../0.0.1-SNAPSHOT/
           
       - name: Build Artifact
         run: |
