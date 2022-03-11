@@ -25,6 +25,11 @@ jobs:
           command: validate
           arguments: "-syntax-only -var aws_access_key=1 -var aws_secret_key=2"
           target: ami.pkr.hcl
+
+      - name: test
+        run: |
+          ls 
+          ls ./0.0.1-SNAPSHOT/ 
           
       - name: Build Artifact
         run: |
