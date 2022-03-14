@@ -4,7 +4,7 @@ Description=A Spring Boot application
 [Service]
 SuccessExitStatus=143
 
-ExecStart=/bin/java -jar /home/ec2-user/csye/webservice-0.0.1-SNAPSHOT.jar
+ExecStart=/bin/java -jar /home/ec2-user/csye/webservice-0.0.1-SNAPSHOT.jar --spring.config.location=file:///home/ec2-user/csye/application.properties
 
 [Install] 
 WantedBy=multi-user.target 
