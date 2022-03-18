@@ -24,7 +24,7 @@ public class ImageService {
 
     @Autowired
     private AmazonS3 amazonS3;
-    @Value("{amazon.s3.bucket-name}")
+    @Value("${amazon.s3.bucket-name}")
     public String bucketName;
 
     @Autowired
