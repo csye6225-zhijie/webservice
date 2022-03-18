@@ -19,8 +19,11 @@ import java.util.Date;
 @Service("imageService")
 @Transactional(readOnly=true)
 public class ImageService {
-    private AmazonS3 amazonS3;
+
     private Date date;
+
+    @Autowired
+    private AmazonS3 amazonS3;
     @Value("{amazon.s3.bucket-name}")
     public String bucketName;
 
@@ -89,4 +92,11 @@ public class ImageService {
         }
     }
 
+//    public AmazonS3 getAmazonS3() {
+//        return amazonS3;
+//    }
+//
+//    public void setAmazonS3(AmazonS3 amazonS3) {
+//        this.amazonS3 = amazonS3;
+//    }
 }
