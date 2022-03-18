@@ -2,21 +2,11 @@ package com.csye6225.webservice.Config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import java.io.File;
-
-
 
 @Configuration
 public class AWSConfig {
@@ -25,7 +15,8 @@ public class AWSConfig {
 
         System.out.println("Starting s3 client");
 
-        return (AmazonS3Client) AmazonS3ClientBuilder.standard()
+        return (AmazonS3Client) AmazonS3ClientBuilder
+                .standard()
                 .withCredentials(new DefaultAWSCredentialsProviderChain())
                 .build();
     }
