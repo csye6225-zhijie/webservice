@@ -2,6 +2,7 @@ package com.csye6225.webservice.Config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,17 +15,14 @@ import org.springframework.context.annotation.Primary;
 @Configuration
 public class AWSConfig {
 
-    @Value("${cloud.aws.region.static}")
-    private String region;
-
     @Bean
-    public AmazonS3Client amazonS3Client() {
+    public static AmazonS3Client amazonS3Client() {
 
         System.out.println("Starting s3 client");
 
         return (AmazonS3Client) AmazonS3ClientBuilder
                 .standard()
-                .withRegion(region)
+                .withRegion(Regions.US_EAST_1)
                 .withCredentials(new DefaultAWSCredentialsProviderChain())
                 .build();
     }
