@@ -11,6 +11,14 @@ variable "aws_region" {
   default = "us-east-1"
 }  
 
+variable "S3_aws_access_key" {
+  type    = string
+}  
+
+variable "S3_aws_secret_key" {
+  type    = string
+}  
+
 variable "source_ami" {
   type    = string
   default = "ami-033b95fb8079dc481"
@@ -65,11 +73,6 @@ build {
         destination = "/tmp/"
 }
 
-    provisioner "file" { 
-        source = "./src/main/resources/application.properties"
-        destination = "/tmp/"
-}
-
     provisioner "shell" {
         inline = [
             "sudo yum update -y", 
@@ -93,12 +96,14 @@ build {
             "cat >application.properties <<EOF",
             "cloud.aws.region.static=${var.aws_region}",
             "cloud.aws.region.auto=false",
-            "cloud.aws.credentials.access-key=${var.aws_access_key}",
-            "cloud.aws.credentials.secret-key=${var.aws_secret_key}",
+            "cloud.aws.credentials.access-key=${var.S3_aws_access_key}",
+            "cloud.aws.credentials.secret-key=${var.S3_aws_secret_key}",
 
             "spring.jpa.hibernate.ddl-auto=update",
             "spring.jpa.show-sql=true",
-            "EOF"
+            "EOF",
+
+            "sudo cloud-init status --wait"
         ]
     }
 
