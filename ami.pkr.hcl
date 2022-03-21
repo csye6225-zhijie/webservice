@@ -11,6 +11,14 @@ variable "aws_region" {
   default = "us-east-1"
 }  
 
+variable "S3_aws_access_key" {
+  type    = string
+}  
+
+variable "S3_aws_secret_key" {
+  type    = string
+}  
+
 variable "source_ami" {
   type    = string
   default = "ami-033b95fb8079dc481"
@@ -88,6 +96,8 @@ build {
             "cat >application.properties <<EOF",
             "cloud.aws.region.static=${var.aws_region}",
             "cloud.aws.region.auto=false",
+            "cloud.aws.credentials.access-key=${var.S3_aws_access_key}",
+            "cloud.aws.credentials.secret-key=${var.S3_aws_secret_key}",
 
             "spring.jpa.hibernate.ddl-auto=update",
             "spring.jpa.show-sql=true",

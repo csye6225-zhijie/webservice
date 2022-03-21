@@ -46,7 +46,7 @@ public class ImageService {
     @Transactional(readOnly = false)
     public ImageVO saveFile(UserVO userVO, InputStream is) throws Exception {
         Image image = new Image();
-        image.setFile_name("user-image.jpeg");
+        image.setFile_name("user-image");
 
         String url = bucketName + "/" + userVO.getId() + "/" + image.getFile_name();
         image.setUrl(url);
@@ -56,7 +56,7 @@ public class ImageService {
         String currentTime = sdf.format(date);
         image.setUpload_date(currentTime);
 
-        uploadImageToS3(is, image.getFile_name());
+        uploadImageToS3(is, image.getUrl());
 
         save(image);  // save image Object into DB
         ImageVO imageVO = new ImageVO(image);
@@ -66,12 +66,12 @@ public class ImageService {
     @Transactional(readOnly = false)
     public void deleteFile(Image image) {
         //Delete image Object from S3
-        amazonS3.deleteObject(bucketName, image.getFile_name());
+        amazonS3.deleteObject(bucketName, image.getUrl());
         //Delete image record from DB
         delete(image.getId());
     }
 
-    private void uploadImageToS3(InputStream is, String file_name) throws Exception {
+    private void uploadImageToS3(InputStream is, String url) throws Exception {
         String fileName = "temp";
         File tempFile = null;
         try {
@@ -80,7 +80,7 @@ public class ImageService {
                     is,
                     tempFile.toPath(),
                     StandardCopyOption.REPLACE_EXISTING);
-            amazonS3.putObject(bucketName, file_name, tempFile);
+            amazonS3.putObject(bucketName, url, tempFile);
 
         } catch (IOException e) {
             e.printStackTrace();

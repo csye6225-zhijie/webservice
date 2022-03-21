@@ -8,7 +8,6 @@ on:
 
   workflow_dispatch:
 
-
 jobs:
   packer:
     if: github.event.pull_request.merged == true
@@ -23,7 +22,7 @@ jobs:
         uses: hashicorp/packer-github-actions@master
         with:
           command: validate
-          arguments: "-syntax-only -var aws_access_key=1 -var aws_secret_key=2"
+          arguments: "-syntax-only"
           target: ami.pkr.hcl
 
       - name: Build Artifact with Maven
@@ -34,10 +33,12 @@ jobs:
         run: |
           ls
           packer init .
-          packer build -on-error=abort -force -var aws_access_key=${{secrets.AWS_ACCESS_KEY}} -var aws_secret_key=${{secrets.AWS_SECRET_KEY}} ami.pkr.hcl
+          packer build -on-error=abort -force -var aws_access_key=${{secrets.AWS_ACCESS_KEY}} -var aws_secret_key=${{secrets.AWS_SECRET_KEY}} -var S3_aws_access_key=${{secrets.S3_AWS_ACCESS_KEY}} -var S3_aws_secret_key=${{secrets.S3_AWS_SECRET_KEY}} ami.pkr.hcl
         env:
             AWS_ACCESS_KEY : ${{secrets.AWS_ACCESS_KEY}}
             AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
+            S3_AWS_ACCESS_KEY: ${{secrets.S3_AWS_ACCESS_KEY}}
+            S3_AWS_SECRET_KEY: ${{secrets.S3_AWS_SECRET_KEY}}
             PACKER_LOG: 1
 
       
