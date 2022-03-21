@@ -65,11 +65,6 @@ build {
         destination = "/tmp/"
 }
 
-    provisioner "file" { 
-        source = "./src/main/resources/application.properties"
-        destination = "/tmp/"
-}
-
     provisioner "shell" {
         inline = [
             "sudo yum update -y", 
@@ -93,12 +88,12 @@ build {
             "cat >application.properties <<EOF",
             "cloud.aws.region.static=${var.aws_region}",
             "cloud.aws.region.auto=false",
-            "cloud.aws.credentials.access-key=${var.aws_access_key}",
-            "cloud.aws.credentials.secret-key=${var.aws_secret_key}",
 
             "spring.jpa.hibernate.ddl-auto=update",
             "spring.jpa.show-sql=true",
-            "EOF"
+            "EOF",
+
+            "sudo cloud-init status --wait"
         ]
     }
 
