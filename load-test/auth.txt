@@ -1,0 +1,2 @@
+# JMeter generated Authorization file
+prod.zhijie-li.me/v1/user/self	Gla0321@gmail.com	111			BASIC
