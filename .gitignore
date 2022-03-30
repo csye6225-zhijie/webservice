@@ -53,3 +53,5 @@ output-*/
 *.rar
 
 .vscode
+
+test/
