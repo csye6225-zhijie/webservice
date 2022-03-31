@@ -84,6 +84,8 @@ build {
             "export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar",
             
             "sudo yum install mariadb -y",
+            "sudo yum install ruby -y",
+            "sudo yum install wget -y",
            
             "sudo su",
             "mkdir csye/",
@@ -96,15 +98,23 @@ build {
             "cat >application.properties <<EOF",
             "cloud.aws.region.static=${var.aws_region}",
             "cloud.aws.region.auto=false",
-            "cloud.aws.credentials.access-key=${var.S3_aws_access_key}",
-            "cloud.aws.credentials.secret-key=${var.S3_aws_secret_key}",
+
 
             "spring.jpa.hibernate.ddl-auto=update",
             "spring.jpa.show-sql=true",
             "EOF",
+
+            "cd /home/ec2-user",
+            "wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install",
+            "chmod +x ./install",
+            "sudo ./install auto > /tmp/logfile",
+            "sudo service codedeploy-agent status",
 
             "sudo cloud-init status --wait"
         ]
     }
 
 }
+
+            // "cloud.aws.credentials.access-key=${var.S3_aws_access_key}",
+            // "cloud.aws.credentials.secret-key=${var.S3_aws_secret_key}",
