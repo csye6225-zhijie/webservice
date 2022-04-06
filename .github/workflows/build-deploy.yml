@@ -54,7 +54,7 @@ jobs:
         run: |
           mkdir codedeploy_artifact
           pwd
-          zip -r ${{ env.ARTIFACT_NAME }} target/webservice-0.0.1-SNAPSHOT.jar codedeploy/*.sh appsepc.yml
+          zip -r ${{ env.ARTIFACT_NAME }} target/webservice-0.0.1-SNAPSHOT.jar codedeploy/*.sh appspec.yml
           ls -al
           mv ${{ env.ARTIFACT_NAME }} codedeploy_artifact/
           pwd
