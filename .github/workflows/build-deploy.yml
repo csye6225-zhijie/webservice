@@ -44,11 +44,21 @@ jobs:
         run: |
           mvn clean install -DskipTests 
           
-      - name: Build Ami
+      # - name: Build Ami
+      #   run: |
+      #     ls
+      #     packer init .
+      #     packer build -on-error=abort -force -var aws_access_key=${{secrets.AWS_ACCESS_KEY}} -var aws_secret_key=${{secrets.AWS_SECRET_KEY}} ami.pkr.hcl
+
+      - name: Build Deployment Artifact
         run: |
-          ls
-          packer init .
-          packer build -on-error=abort -force -var aws_access_key=${{secrets.AWS_ACCESS_KEY}} -var aws_secret_key=${{secrets.AWS_SECRET_KEY}} ami.pkr.hcl
+          mkdir codedeploy_artifact
+          pwd
+          zip -r ${{ env.ARTIFACT_NAME }} target/webservice-0.0.1-SNAPSHOT.jar codedeploy/*.sh appsepc.yml
+          ls -al
+          mv ${{ env.ARTIFACT_NAME }} codedeploy_artifact/
+          pwd
+          ls codedeploy_artifact/
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -60,8 +70,22 @@ jobs:
 
       - name: Upload jar-file to CodeDeploy S3 bucket
         run: |
-          aws s3 sync . s3://${{ secrets.S3_CODEDEPLOY_BUCKET }}
+          aws s3 sync ./codedeploy_artifact s3://${{ secrets.S3_CODEDEPLOY_BUCKET }}
 
 
-      - name: Trigger a new CodeDeploy deploy
+      - name: CodeDeploy API call
+        run: |
+          output=$(aws deploy create-deployment \
+            --application-name ${{ env.CODEDEPLOY_APPLICATION_NAME }} \
+            --deployment-group-name ${{ env.CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP_NAME }} \
+            --deployment-config-name CodeDeployDefault.AllAtOnce \
+            --description CodeDeploy-without-autoScalling \
+            --s3-location bucket=s3://${{ secrets.S3_CODEDEPLOY_BUCKET }},key=${{ env.ARTIFACT_NAME }},bundleType=zip \
+            --region ${{ env.AWS_REGION }} \
+            --output json)
+
+            echo $output
+
+            aws deploy wait deployment-successful --deployment-id $dId
+
       

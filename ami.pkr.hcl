@@ -98,6 +98,8 @@ build {
             "cat >application.properties <<EOF",
             "cloud.aws.region.static=${var.aws_region}",
             "cloud.aws.region.auto=false",
+            "cloud.aws.credentials.access-key=${var.S3_aws_access_key}",
+            "cloud.aws.credentials.secret-key=${var.S3_aws_secret_key}",
 
 
             "spring.jpa.hibernate.ddl-auto=update",
@@ -115,6 +117,3 @@ build {
     }
 
 }
-
-            // "cloud.aws.credentials.access-key=${var.S3_aws_access_key}",
-            // "cloud.aws.credentials.secret-key=${var.S3_aws_secret_key}",
