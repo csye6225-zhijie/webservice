@@ -88,7 +88,7 @@ jobs:
             sudo apt-get update -y
             sudo apt-get install jq
 
-            dId = $(echo $output | jq -r '.deploymentId')
+            dId=$(echo $output | jq -r '.deploymentId')
             aws deploy wait deployment-successful --deployment-id $dId
 
       
