@@ -6,12 +6,6 @@ env:
   CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP_NAME: csye6225-webapp-deployment
   AWS_REGION: us-east-1
 
-  # AWS_ACCESS_KEY : ${{secrets.AWS_ACCESS_KEY}}
-  # AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
-  # S3_AWS_ACCESS_KEY: ${{secrets.S3_AWS_ACCESS_KEY}}
-  # S3_AWS_SECRET_KEY: ${{secrets.S3_AWS_SECRET_KEY}}
-  # PACKER_LOG: 1
-
 on:
   pull_request:
     branches: [ main ]
@@ -43,18 +37,12 @@ jobs:
       - name: Build Artifact with Maven
         run: |
           mvn clean install -DskipTests 
-          
-      # - name: Build Ami
-      #   run: |
-      #     ls
-      #     packer init .
-      #     packer build -on-error=abort -force -var aws_access_key=${{secrets.AWS_ACCESS_KEY}} -var aws_secret_key=${{secrets.AWS_SECRET_KEY}} ami.pkr.hcl
 
       - name: Build Deployment Artifact
         run: |
           mkdir codedeploy_artifact
           pwd
-          zip -r ${{ env.ARTIFACT_NAME }} target/webservice-0.0.1-SNAPSHOT.jar codedeploy/*.sh appspec.yml
+          zip -r ${{ env.ARTIFACT_NAME }} target/webservice-0.0.1-SNAPSHOT.jar codedeploy/*.sh appspec.yml cloudwatch-agent-config.json
           ls -al
           mv ${{ env.ARTIFACT_NAME }} codedeploy_artifact/
           pwd
