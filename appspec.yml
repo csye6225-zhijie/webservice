@@ -5,7 +5,7 @@ files:
   - source: ./target/webservice-0.0.1-SNAPSHOT.jar
     destination: csye/
   - source: ./cloudwatch-agent-config.json
-    destination: 
+    destination: /opt/cloudwatch-config.json
 
 hooks:
   ApplicationStop:
