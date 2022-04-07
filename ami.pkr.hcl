@@ -79,6 +79,7 @@ build {
             "sudo mv /tmp/application.service /etc/systemd/system",
             "sudo su",
             "mkdir csye/",
+            "cd csye/",
 
             "touch application.properties",
             "cat >application.properties <<EOF",
