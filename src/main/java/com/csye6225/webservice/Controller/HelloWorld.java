@@ -10,7 +10,7 @@ public class HelloWorld {
     @RequestMapping("/healthz")
     public String getHelloWorld() {
 
-        return "Hello World, Cicd!";
+        return "Hello World, Cicd!!!";
     }
 
 }
