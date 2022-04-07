@@ -45,7 +45,7 @@ jobs:
           zip -r ${{ env.ARTIFACT_NAME }} target/webservice-0.0.1-SNAPSHOT.jar codedeploy/*.sh appspec.yml cloudwatch-agent-config.json
           ls -al
           mv ${{ env.ARTIFACT_NAME }} codedeploy_artifact/
-          mv appspec.yml codedeploy_artifact/
+          cp appspec.yml codedeploy_artifact/
           pwd
           ls codedeploy_artifact/
 
