@@ -45,6 +45,7 @@ jobs:
           zip -r ${{ env.ARTIFACT_NAME }} target/webservice-0.0.1-SNAPSHOT.jar codedeploy/*.sh appspec.yml cloudwatch-agent-config.json
           ls -al
           mv ${{ env.ARTIFACT_NAME }} codedeploy_artifact/
+          cp appspec.yml codedeploy_artifact/
           pwd
           ls codedeploy_artifact/
 
@@ -65,7 +66,7 @@ jobs:
           --description "Latest revision for ${{ env.ARTIFACT_NAME }}" \
           --ignore-hidden-files \
           --s3-location s3://${{ secrets.S3_CODEDEPLOY_BUCKET }}/${{ env.ARTIFACT_NAME }} \
-          --source . ./codedeploy_artifact/ 
+          --source ./codedeploy_artifact
 
 
       - name: CodeDeploy API call
