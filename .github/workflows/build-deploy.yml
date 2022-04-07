@@ -58,7 +58,14 @@ jobs:
 
       - name: Upload jar-file to CodeDeploy S3 bucket
         run: |
-          aws s3 sync ./codedeploy_artifact s3://${{ secrets.S3_CODEDEPLOY_BUCKET }}
+
+          rm -rf aws
+          aws deploy push \
+          --application-name csye6225-webapp \
+          --description "Latest revision for ${{ env.ARTIFACT_NAME }}" \
+          --ignore-hidden-files \
+          --s3-location s3://${{ secrets.S3_CODEDEPLOY_BUCKET }}/${{ env.ARTIFACT_NAME }} \
+          --source ./codedeploy_artifact
 
 
       - name: CodeDeploy API call
