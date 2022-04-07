@@ -65,7 +65,7 @@ jobs:
           --description "Latest revision for ${{ env.ARTIFACT_NAME }}" \
           --ignore-hidden-files \
           --s3-location s3://${{ secrets.S3_CODEDEPLOY_BUCKET }}/${{ env.ARTIFACT_NAME }} \
-          --source codedeploy_artifact/ 
+          --source . ./codedeploy_artifact/ 
 
 
       - name: CodeDeploy API call
