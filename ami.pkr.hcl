@@ -96,6 +96,7 @@ build {
             "sudo ./install auto > /tmp/logfile",
             "sudo service codedeploy-agent status",
             "sudo yum install amazon-cloudwatch-agent -y",
+            "sudo service codedeploy-agent stop",
 
             "sudo cloud-init status --wait"
         ]
