@@ -2,7 +2,7 @@
 
 systemctl status application.service
 
-sudo chmod +x csye/webservice-0.0.1-SNAPSHOT.jar
+sudo chmod +x /home/ec2-user/csye/webservice-0.0.1-SNAPSHOT.jar
 
 # cleanup log files
 

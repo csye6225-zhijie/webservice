@@ -3,7 +3,7 @@ os: linux
 
 files:
   - source: ./target/webservice-0.0.1-SNAPSHOT.jar
-    destination: csye/
+    destination: /home/ec2-user/csye
   - source: ./cloudwatch-agent-config.json
     destination: /opt
 
