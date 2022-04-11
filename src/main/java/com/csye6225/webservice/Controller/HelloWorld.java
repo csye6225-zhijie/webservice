@@ -16,7 +16,7 @@ public class HelloWorld {
     public String getHelloWorld() {
         statsDClient.incrementCounter("_healthCheck_API_");
 
-        return "Hello World!";
+        return "Hello World, CICD!";
     }
 
 }
