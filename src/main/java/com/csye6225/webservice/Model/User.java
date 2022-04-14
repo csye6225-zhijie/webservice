@@ -30,6 +30,18 @@ public class User {
     @NotBlank(message = "Your Password is mandatory")
     private String password;
 
+    @NotBlank
+    @Column(name="isVerified")
+    private boolean isVerified = false;
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
+    }
+
     public String getFirst_name() {
         return first_name;
     }
